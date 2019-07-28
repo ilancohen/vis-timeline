@@ -5,7 +5,7 @@
  * Create a fully customizable, interactive timeline with items and ranges.
  * 
  * @version 5.0.0
- * @date    2019-07-28T19:13:51Z
+ * @date    2019-07-28T21:00:28Z
  * 
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -14149,6 +14149,55 @@ function _createClass$1(Constructor, protoProps, staticProps) {
   return Constructor;
 }
 
+function _defineProperty$2(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys$2(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys$2(source, true).forEach(function (key) {
+        _defineProperty$2(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys$2(source).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function _inherits$1(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
     throw new TypeError("Super expression must either be null or a function");
@@ -14194,6 +14243,10 @@ function _possibleConstructorReturn$1(self, call) {
   }
 
   return _assertThisInitialized$1(self);
+}
+
+function _readOnlyError(name) {
+  throw new Error("\"" + name + "\" is read-only");
 }
 
 function _toConsumableArray$2(arr) {
@@ -18826,7 +18879,7 @@ function () {
     key: "setOptions",
     value: function setOptions(options) {
       if (options) {
-        util.extend(this.options, options);
+        this.options = _objectSpread2({}, this.options, {}, options);
       }
     }
     /**
@@ -19489,7 +19542,7 @@ function (_Component) {
         offset: 0.5
       }
     };
-    _this.options = util.extend({}, _this.defaultOptions);
+    _this.options = _objectSpread2({}, _this.defaultOptions);
     _this.props = {
       touch: {}
     };
@@ -19538,9 +19591,7 @@ function (_Component) {
     key: "setOptions",
     value: function setOptions(options) {
       if (options) {
-        // copy the options that we know
-        var fields = ['animation', 'direction', 'min', 'max', 'zoomMin', 'zoomMax', 'moveable', 'zoomable', 'moment', 'activate', 'hiddenDates', 'zoomKey', 'zoomFriction', 'rtl', 'showCurrentTime', 'rollingMode', 'horizontalScroll'];
-        util.selectiveExtend(fields, this.options, options);
+        this.options = _objectSpread2({}, this.options, {}, options);
 
         if (options.rollingMode && options.rollingMode.follow) {
           this.startRolling();
@@ -23608,8 +23659,9 @@ function () {
   }, {
     key: "setFormat",
     value: function setFormat(format) {
-      var defaultFormat = util.deepExtend({}, TimeStep.FORMAT);
-      this.format = util.deepExtend(defaultFormat, format);
+      var defaultFormat = _objectSpread2({}, TimeStep.FORMAT);
+
+      this.format = _objectSpread2({}, defaultFormat, {}, format);
     }
     /**
      * Set a new range
@@ -24587,7 +24639,7 @@ function (_Component) {
       moment: moment$2,
       timeAxis: null
     };
-    _this.options = util.extend({}, _this.defaultOptions);
+    _this.options = _objectSpread2({}, _this.defaultOptions);
     _this.body = body; // create the HTML DOM
 
     _this._create();
@@ -24610,13 +24662,11 @@ function (_Component) {
     key: "setOptions",
     value: function setOptions(options) {
       if (options) {
-        // copy all options that we know
-        util.selectiveExtend(['showMinorLabels', 'showMajorLabels', 'maxMinorChars', 'hiddenDates', 'timeAxis', 'moment', 'rtl'], this.options, options); // deep copy the format options
-
-        util.selectiveDeepExtend(['format'], this.options, options);
+        this.options = _objectSpread2({}, this.options, {}, options);
 
         if ('orientation' in options) {
           if (typeof options.orientation === 'string') {
+            this.options.orientation = {};
             this.options.orientation.axis = options.orientation;
           } else if (_typeof$1(options.orientation) === 'object' && 'axis' in options.orientation) {
             this.options.orientation.axis = options.orientation.axis;
@@ -25598,7 +25648,7 @@ function (_Component) {
       id: undefined,
       title: undefined
     };
-    _this.options = util.extend({}, _this.defaultOptions);
+    _this.options = _objectSpread2({}, _this.defaultOptions);
 
     if (options && options.time) {
       _this.customTime = options.time;
@@ -25628,8 +25678,7 @@ function (_Component) {
     key: "setOptions",
     value: function setOptions(options) {
       if (options) {
-        // copy all options that we know
-        util.selectiveExtend(['moment', 'locale', 'locales', 'id', 'title', 'rtl'], this.options, options);
+        this.options = _objectSpread2({}, this.options, {}, options);
       }
     }
     /**
@@ -26260,9 +26309,7 @@ function () {
     key: "setOptions",
     value: function setOptions(options) {
       if (options) {
-        // copy the known options
-        var fields = ['width', 'height', 'minHeight', 'maxHeight', 'autoResize', 'start', 'end', 'clickToUse', 'dataAttributes', 'hiddenDates', 'locale', 'locales', 'moment', 'preferZoom', 'rtl', 'zoomKey', 'horizontalScroll', 'verticalScroll'];
-        util.selectiveExtend(fields, this.options, options);
+        this.options = _objectSpread2({}, this.options, {}, options);
         this.dom.rollingModeBtn.style.visibility = 'hidden';
 
         if (this.options.rtl) {
@@ -26307,7 +26354,7 @@ function () {
             var timeAxis2 = this.timeAxis2 = new TimeAxis(this.body);
 
             timeAxis2.setOptions = function (options) {
-              var _options = options ? util.extend({}, options) : {};
+              var _options = options ? _objectSpread2({}, options) : {};
 
               _options.orientation = 'top'; // override the orientation option, always top
 
@@ -26369,9 +26416,10 @@ function () {
 
         this.configurator.setOptions(options.configure); // collect the settings of all components, and pass them to the configuration system
 
-        var appliedOptions = util.deepExtend({}, this.options);
+        var appliedOptions = _objectSpread2({}, this.options);
+
         this.components.forEach(function (component) {
-          util.deepExtend(appliedOptions, component.options);
+          appliedOptions = (_readOnlyError("appliedOptions"), _objectSpread2({}, appliedOptions, {}, component.options));
         });
         this.configurator.setModuleOptions({
           global: appliedOptions
@@ -26532,7 +26580,7 @@ function () {
         throw new Error("A custom time with id ".concat(JSON.stringify(id), " already exists"));
       }
 
-      var customTime = new CustomTime(this.body, util.extend({}, this.options, {
+      var customTime = new CustomTime(this.body, _objectSpread2({}, this.options, {
         time: timestamp,
         id: id
       }));
@@ -27347,7 +27395,7 @@ function (_Component) {
       locales: locales,
       locale: 'en'
     };
-    _this.options = util.extend({}, _this.defaultOptions);
+    _this.options = _objectSpread2({}, _this.defaultOptions);
     _this.offset = 0;
 
     _this._create();
@@ -27395,8 +27443,7 @@ function (_Component) {
     key: "setOptions",
     value: function setOptions(options) {
       if (options) {
-        // copy all options that we know
-        util.selectiveExtend(['rtl', 'showCurrentTime', 'alignCurrentTime', 'moment', 'locale', 'locales'], this.options, options);
+        this.options = _objectSpread2({}, this.options, {}, options);
       }
     }
     /**
@@ -29605,8 +29652,7 @@ function () {
             remove: this.options.editable
           };
         } else if (_typeof$1(this.options.editable) === 'object') {
-          this.editable = {};
-          util.selectiveExtend(['updateTime', 'updateGroup', 'remove'], this.editable, this.options.editable);
+          this.editable = _objectSpread2({}, this.editable, {}, this.options.editable);
         }
       } // Item data overrides, except if options.editable.overrideItems is set.
 
@@ -29622,8 +29668,7 @@ function () {
           } else if (_typeof$1(this.data.editable) === 'object') {
             // TODO: in timeline.js 5.0, we should change this to not reset options from the timeline configuration.
             // Basically just remove the next line...
-            this.editable = {};
-            util.selectiveExtend(['updateTime', 'updateGroup', 'remove'], this.editable, this.data.editable);
+            this.editable = _objectSpread2({}, this.editable, {}, this.data.editable);
           }
         }
       }
@@ -32259,7 +32304,7 @@ function (_Component) {
       tooltipOnItemUpdateTime: false
     }; // options is shared by this ItemSet and all its items
 
-    _this.options = util.extend({}, _this.defaultOptions);
+    _this.options = _objectSpread2({}, _this.defaultOptions);
     _this.options.rtl = options.rtl;
     _this.options.onTimeout = options.onTimeout; // options for getting items from the DataSet with the correct type
 
@@ -32550,16 +32595,15 @@ function (_Component) {
       var _this3 = this;
 
       if (options) {
-        // copy all options that we know
-        var fields = ['type', 'rtl', 'align', 'order', 'stack', 'stackSubgroups', 'selectable', 'multiselect', 'multiselectPerGroup', 'groupOrder', 'dataAttributes', 'template', 'groupTemplate', 'visibleFrameTemplate', 'hide', 'snap', 'groupOrderSwap', 'showTooltips', 'tooltip', 'tooltipOnItemUpdateTime', 'groupHeightMode', 'onTimeout'];
-        util.selectiveExtend(fields, this.options, options);
+        this.options = _objectSpread2({}, this.options, {}, options);
 
         if ('itemsAlwaysDraggable' in options) {
           if (typeof options.itemsAlwaysDraggable === 'boolean') {
+            this.options.itemsAlwaysDraggable = {};
             this.options.itemsAlwaysDraggable.item = options.itemsAlwaysDraggable;
             this.options.itemsAlwaysDraggable.range = false;
           } else if (_typeof$1(options.itemsAlwaysDraggable) === 'object') {
-            util.selectiveExtend(['item', 'range'], this.options.itemsAlwaysDraggable, options.itemsAlwaysDraggable); // only allow range always draggable when item is always draggable as well
+            this.options.itemsAlwaysDraggable = _objectSpread2({}, this.options.itemsAlwaysDraggable, {}, options.itemsAlwaysDraggable); // only allow range always draggable when item is always draggable as well
 
             if (!this.options.itemsAlwaysDraggable.item) {
               this.options.itemsAlwaysDraggable.range = false;
@@ -32569,6 +32613,7 @@ function (_Component) {
 
         if ('orientation' in options) {
           if (typeof options.orientation === 'string') {
+            this.options.orientation = {};
             this.options.orientation.item = options.orientation === 'top' ? 'top' : 'bottom';
           } else if (_typeof$1(options.orientation) === 'object' && 'item' in options.orientation) {
             this.options.orientation.item = options.orientation.item;
@@ -32577,18 +32622,20 @@ function (_Component) {
 
         if ('margin' in options) {
           if (typeof options.margin === 'number') {
+            this.options.margin = {};
             this.options.margin.axis = options.margin;
             this.options.margin.item.horizontal = options.margin;
             this.options.margin.item.vertical = options.margin;
           } else if (_typeof$1(options.margin) === 'object') {
-            util.selectiveExtend(['axis'], this.options.margin, options.margin);
+            this.options.margin = _objectSpread2({}, this.options.margin, {}, options.margin);
 
             if ('item' in options.margin) {
               if (typeof options.margin.item === 'number') {
+                this.options.margin.item = {};
                 this.options.margin.item.horizontal = options.margin.item;
                 this.options.margin.item.vertical = options.margin.item;
               } else if (_typeof$1(options.margin.item) === 'object') {
-                util.selectiveExtend(['horizontal', 'vertical'], this.options.margin.item, options.margin.item);
+                this.options.margin = _objectSpread2({}, this.options.margin, {}, options.margin);
               }
             }
           }
@@ -32596,23 +32643,26 @@ function (_Component) {
 
         if ('editable' in options) {
           if (typeof options.editable === 'boolean') {
+            this.options.editable = {};
             this.options.editable.updateTime = options.editable;
             this.options.editable.updateGroup = options.editable;
             this.options.editable.add = options.editable;
             this.options.editable.remove = options.editable;
             this.options.editable.overrideItems = false;
           } else if (_typeof$1(options.editable) === 'object') {
-            util.selectiveExtend(['updateTime', 'updateGroup', 'add', 'remove', 'overrideItems'], this.options.editable, options.editable);
+            this.options.editable = _objectSpread2({}, this.options.editable, {}, options.editable);
           }
         }
 
         if ('groupEditable' in options) {
           if (typeof options.groupEditable === 'boolean') {
+            this.options.groupEditable = {};
             this.options.groupEditable.order = options.groupEditable;
             this.options.groupEditable.add = options.groupEditable;
             this.options.groupEditable.remove = options.groupEditable;
           } else if (_typeof$1(options.groupEditable) === 'object') {
-            util.selectiveExtend(['order', 'add', 'remove'], this.options.groupEditable, options.groupEditable);
+            this.options.groupEditable = _objectSpread2({}, this.options.groupEditable, {}, options.groupEditable);
+            util.selectiveExten(['order', 'add', 'remove'], this.options.groupEditable, options.groupEditable);
           }
         } // callback functions
 
@@ -33533,10 +33583,10 @@ function (_Component) {
             throw new Error("Illegal group id. ".concat(id, " is a reserved id."));
           }
 
-          var groupOptions = Object.create(me.options);
-          util.extend(groupOptions, {
+          var groupOptions = _objectSpread2({}, me.options, {
             height: null
           });
+
           group = new Group(id, groupData, me);
           me.groups[id] = group; // add items with this groupId to the new group
 
@@ -34367,7 +34417,9 @@ function (_Component) {
         var me = this;
         var id = me.groupTouchParams.group.groupId;
         var dataset = me.groupsData.getDataSet();
-        var groupData = util.extend({}, dataset.get(id)); // clone the data
+
+        var groupData = _objectSpread2({}, dataset.get(id)); // clone the data
+
 
         me.options.onMoveGroup(groupData, function (groupData) {
           if (groupData) {
@@ -34860,7 +34912,7 @@ function (_Component) {
      * @private
      */
     value: function _cloneItemData(itemData, type) {
-      var clone = util.extend({}, itemData);
+      var clone = _objectSpread2({}, itemData);
 
       if (!type) {
         // convert start and end date to the type (Date, Moment, ...) configured in the DataSet
@@ -36449,7 +36501,7 @@ function () {
 
       // store the previous color for next time;
       if (storePrevious === true) {
-        this.previousColor = util.extend({}, this.color);
+        this.previousColor = _objectSpread2({}, this.color);
       }
 
       if (this.applied === true) {
@@ -36521,7 +36573,7 @@ function () {
 
       // store the initial color
       if (setInitial === true) {
-        this.initialColor = util.extend({}, rgba);
+        this.initialColor = _objectSpread2({}, rgba);
       }
 
       this.color = rgba;
@@ -36895,7 +36947,7 @@ function () {
       container: undefined,
       showButton: true
     };
-    util.extend(this.options, this.defaultOptions);
+    this.options = _objectSpread2({}, this.options, {}, this.defaultOptions);
     this.configureOptions = configureOptions;
     this.moduleOptions = {};
     this.domElements = [];
@@ -37805,7 +37857,7 @@ function (_Core) {
       },
       moment: moment$2
     };
-    _this.options = util.deepExtend({}, _this.defaultOptions); // Create the DOM, props, and emitter
+    _this.options = _objectSpread2({}, _this.defaultOptions); // Create the DOM, props, and emitter
 
     _this._create(container);
 
@@ -39009,7 +39061,7 @@ function (_Component) {
       start: 0,
       end: 0
     };
-    _this.options = util.extend({}, _this.defaultOptions);
+    _this.options = _objectSpread2({}, _this.defaultOptions);
     _this.conversionFactor = 1;
 
     _this.setOptions(options);
@@ -39087,8 +39139,7 @@ function (_Component) {
           redraw = true;
         }
 
-        var fields = ['orientation', 'showMinorLabels', 'showMajorLabels', 'icons', 'majorLinesOffset', 'minorLinesOffset', 'labelOffsetX', 'labelOffsetY', 'iconWidth', 'width', 'visible', 'left', 'right', 'alignZeros'];
-        util.selectiveDeepExtend(fields, this.options, options);
+        this.options = _objectSpread2({}, this.options, {}, options);
         this.minWidth = Number("".concat(this.options.width).replace("px", ""));
 
         if (redraw === true && this.dom.frame) {
@@ -40294,8 +40345,7 @@ GraphGroup.prototype.setZeroPosition = function (pos) {
 
 GraphGroup.prototype.setOptions = function (options) {
   if (options !== undefined) {
-    var fields = ['sampling', 'style', 'sort', 'yAxisOrientation', 'barChart', 'zIndex', 'excludeFromStacking', 'excludeFromLegend'];
-    util.selectiveDeepExtend(fields, this.options, options); // if the group's drawPoints is a function delegate the callback to the onRender property
+    this.options = _objectSpread2({}, this.options, {}, options); // if the group's drawPoints is a function delegate the callback to the onRender property
 
     if (typeof options.drawPoints == 'function') {
       options.drawPoints = {
@@ -40684,7 +40734,7 @@ function LineGraph(body, options) {
     }
   }; // options is shared by this lineGraph and all its items
 
-  this.options = util.extend({}, this.defaultOptions);
+  this.options = _objectSpread2({}, this.defaultOptions);
   this.dom = {};
   this.props = {};
   this.hammer = null;
@@ -40790,7 +40840,6 @@ LineGraph.prototype._create = function () {
 
 LineGraph.prototype.setOptions = function (options) {
   if (options) {
-    var fields = ['sampling', 'defaultGroup', 'stack', 'height', 'graphHeight', 'yAxisOrientation', 'style', 'barChart', 'dataAxis', 'sort', 'groups'];
 
     if (options.graphHeight === undefined && options.height !== undefined) {
       this.updateSVGheight = true;
@@ -40801,7 +40850,7 @@ LineGraph.prototype.setOptions = function (options) {
       }
     }
 
-    util.selectiveDeepExtend(fields, this.options, options);
+    this.options = _objectSpread2({}, this.options, {}, options);
     util.mergeOptions(this.options, options, 'interpolation');
     util.mergeOptions(this.options, options, 'drawPoints');
     util.mergeOptions(this.options, options, 'shaded');
@@ -42448,7 +42497,7 @@ function Graph2d(container, items, groups, options) {
     maxHeight: null,
     minHeight: null
   };
-  this.options = util.deepExtend({}, this.defaultOptions); // Create the DOM, props, and emitter
+  this.options = _objectSpread2({}, this.defaultOptions); // Create the DOM, props, and emitter
 
   this._create(container); // all components listed here will be repainted automatically
 
