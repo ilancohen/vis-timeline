@@ -5,7 +5,7 @@
  * Create a fully customizable, interactive timeline with items and ranges.
  * 
  * @version 5.0.0
- * @date    2019-07-28T21:00:28Z
+ * @date    2019-07-29T19:05:45Z
  * 
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -5350,7 +5350,7 @@ function convert(object, type) {
     case 'ASPDate':
       if (isNumber(object)) {
         return '/Date(' + object + ')/';
-      } else if (object instanceof Date || isMoment(object)) {
+      } else if (object instanceof Date) {
         return '/Date(' + object.valueOf() + ')/';
       } else if (isString(object)) {
         match = ASPDateRegex.exec(object);
